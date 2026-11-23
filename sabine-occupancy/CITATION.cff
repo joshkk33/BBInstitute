@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this module, please cite it as below."
+title: "sabine-occupancy: occupancy correction for reverberation time and impulse responses"
+version: 0.1.0
+date-released: 2026-12-15
+license: MIT
+repository-code: "https://github.com/joshkk33/BBInstitute/tree/main/sabine-occupancy"
+authors:
+  - name: "Bear Branch Sanctuary, Inc."
+references:
+  - type: book
+    title: "Collected Papers on Acoustics"
+    authors:
+      - family-names: "Sabine"
+        given-names: "Wallace Clement"
+    publisher:
+      name: "Harvard University Press"
+    year: 1922
