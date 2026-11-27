@@ -19,11 +19,12 @@ One file, numpy only, pure functions. Drop `sabine.py` into your project.
 ```python
 import sabine
 
-t_empty = {500: 10.0}                      # measured empty RT60 per octave band (s)
+# Hagia Sophia, measured empty (Pentcheva 2017): RT60 per octave band, seconds
+t_empty = {250: 12.0, 500: 12.0, 1000: 10.0, 2000: 8.0}
 sabine.occupied_rt60(t_empty, volume_m3=255_800, n_people=5000)
-# {500: 7.28}
+# {250: 8.98, 500: 8.28, 1000: 7.1, 2000: 5.97}
 sabine.solve_people(t_empty, volume_m3=255_800, target_t=6.0)
-# 8920.5 → occupants needed (a float; capacity is a separate question)
+# 11150.7 → occupants needed at 500 Hz (a float; capacity is a separate question)
 ```
 
 ## Why start from a measured RT60
@@ -41,23 +42,33 @@ If you are building a room from a materials table instead, use
 ## Two worked examples: why the correction matters more in small rooms
 
 **Illustration from published values — not a result.** Hagia Sophia, Istanbul:
-empty RT60 ≈ 10 s at 500 Hz, volume ≈ 255,800 m³. Empty absorption is
-≈ 4,100 sabins, so each occupant changes T by under 0.01 %.
+measured empty RT60 about 12 s at 250–500 Hz, 10 s at 1 kHz and 8 s at 2 kHz,
+volume 255,800 m³ (Pentcheva, *Hagia Sophia: Sound, Space, and Spirit in
+Byzantium*, 2017, pp. 102–4; Icons of Sound, Stanford CCRMA). Empty absorption
+is about 3,400 sabins at 500 Hz, so each occupant changes T by about 0.01 %.
 
-| occupants | T₅₀₀ (light attire) | T₅₀₀ (modern attire) |
+| occupants | T₅₀₀ (packed crowd, 0.31/person) | T₅₀₀ (seated audience, 0.44/person) |
 |---|---|---|
-| 0 | 10.0 s | 10.0 s |
-| 1,000 | 9.3 s | 9.0 s |
-| 5,000 | 7.3 s | 6.5 s |
-| 10,000 | 5.7 s | 4.8 s |
+| 0 | 12.0 s | 12.0 s |
+| 1,000 | 11.0 s | 10.6 s |
+| 5,000 | 8.3 s | 7.3 s |
+| 10,000 | 6.3 s | 5.3 s |
 
-A crowd matters, but it takes thousands of people.
+A crowd matters, but it takes thousands of people; T₅₀₀ = 1 s would need about
+120,000.
+
+*Prior work:* Weitze, Rindel, Christensen & Gade (Forum Acusticum 2002, EU
+CAHRISMA project) simulated the Byzantine church in ODEON, including a version
+with an audience: T30,mid 10.5 s → 8.4 s (odeon.dk). In Sabine terms that audience
+is roughly 2,000–2,900 people. Simulation tools can model a congregation directly;
+this module is for the other case, an impulse response **measured** empty, which
+is the only time anyone fires a balloon in a monument.
 
 **King's Chamber, Great Pyramid** (Petrie survey, granite, modelled empty
 T₅₀₀ = 13.95 s, V = 320.7 m³). Empty absorption is only 3.7 sabins, so each
 occupant adds about 8 % to it:
 
-| occupants | T₅₀₀ (light attire) |
+| occupants | T₅₀₀ (packed crowd) |
 |---|---|
 | 0 | 13.95 s |
 | 10 | 7.6 s |
@@ -66,6 +77,11 @@ occupant adds about 8 % to it:
 
 Ten people halve the reverberation time. In a room like this, an empty-room
 auralization describes a condition that may rarely have occurred.
+
+Clear speech (T₅₀₀ = 1 s) would need 156 people, more than fit. As a cross-check,
+treating the crowd as an absorbing *area* (0.87 per m² at 500 Hz, the tabulated
+value for a dense audience) gives 1.2 s with the usable floor packed and 1.0 s
+packed wall to wall: conversation is at the edge of possible.
 
 `examples/kings_chamber_sensitivity.md` works through which assumptions those
 numbers depend on. Short version: **per-person absorption dominates every
@@ -91,10 +107,16 @@ All of these are in the module docstring too.
   sabins per audience member (a *seated* audience, Harvard, c. 1900). Standing
   people in other dress may absorb more or less. Pass `per_person={band: sabins}`
   when you have better data.
-- **`attire="light"` is an assumption, not a measurement.** It scales the table
-  by 0.70 for lighter ancient dress. Report results under `"modern"` (1.0) as well.
-- **No crowd shading.** Absorption is linear in N; in dense crowds bodies shade
-  each other and real absorption per person falls.
+- **`attire="light"` (0.70 × the table, 0.31 sabins at 500 Hz) is an assumption,
+  not a measurement.** It was introduced for lighter ancient dress, but there is a
+  better reason for a figure near it: at crush density bodies shade each other.
+  The tabulated audience-area coefficient at 500 Hz (0.87 per m² at 2 persons/m²;
+  Vorländer, *Auralization*, 2008) is 0.435 per person at that density, Sabine's
+  figure, but spread over a crush crowd (0.35 m² each) it is about 0.30 per person.
+  Report results under `"modern"` (1.0) as well.
+- **No crowd shading in the model itself.** Absorption is linear in N; in dense
+  crowds bodies shade each other and real absorption per person falls. Use the
+  `"light"` figure, or your own `per_person=`, for packed rooms.
 - **Capacity is a separate claim.** `capacity()` is a bare-floor upper bound
   (default 0.35 m²/person ≈ crush). The acoustic functions never clamp to it.
 - **`presence_filter` changes decay rate only.** It multiplies each octave band
