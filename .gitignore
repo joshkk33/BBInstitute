@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 .venv/
 *.wav
+# the take-home reverb presets are the product, keep them
+!sabine-occupancy/rooms/**/*.wav

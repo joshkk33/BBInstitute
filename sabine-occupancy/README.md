@@ -71,6 +71,14 @@ auralization describes a condition that may rarely have occurred.
 numbers depend on. Short version: **per-person absorption dominates every
 other input**. Report results under more than one per-person value.
 
+## Take a room home
+
+[`rooms/`](rooms/) has each of the five booth rooms as convolution-reverb impulse
+responses (48 kHz, 24-bit WAV), empty and with people in them, made with this
+module's `presence_filter`. Load one into Logic's Space Designer, Ableton's Hybrid
+Reverb, Reaper's ReaVerb or any convolution plugin and you are playing in that room,
+with that crowd. The presets are CC BY 4.0.
+
 ## Assumptions and limits
 
 All of these are in the module docstring too.
