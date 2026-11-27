@@ -5,8 +5,10 @@ version: 0.1.0
 date-released: 2026-12-15
 license: MIT
 repository-code: "https://github.com/joshkk33/BBInstitute/tree/main/sabine-occupancy"
+url: "https://bearbranch.org"
 authors:
-  - name: "Bear Branch Sanctuary, Inc."
+  - name: "Bear Branch Institute, Bear Branch Sanctuary, Inc."
+    website: "https://bearbranch.org"
 references:
   - type: book
     title: "Collected Papers on Acoustics"

@@ -126,4 +126,9 @@ documented fact that the speech-clarity finding reverses at modern attire (110).
 
 ## License
 
-MIT — see `LICENSE`. Use it, change it, ship it. A citation is appreciated, not required.
+MIT for the code (see `LICENSE`), CC BY 4.0 for the [reverb presets](rooms/).
+Use it, change it, ship it. A citation is appreciated, not required.
+
+Made by the Bear Branch Institute, part of [Bear Branch Sanctuary](https://bearbranch.org),
+a small 501(c)(3) nonprofit. If this saves you time or ends up in your work, please
+consider [a donation to the Sanctuary](https://donate.stripe.com/fZu28qdJ82rkeCD7FxfMA00).

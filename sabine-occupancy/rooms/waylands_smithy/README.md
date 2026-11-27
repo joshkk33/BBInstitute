@@ -27,4 +27,13 @@ quieter tails of the occupied versions are real, not normalised away.
 
 See [../README.md](../README.md) for how to load these in common software.
 
-CC BY 4.0 — free to use in anything, including commercial work; please credit Bear Branch Institute.
+## License, credit, and a request
+
+**CC BY 4.0.** Use these in anything, including commercial music, film, games and
+research. Please credit:
+
+> Reverb presets: Bear Branch Institute (bearbranch.org), made with sabine.py
+
+Bear Branch Sanctuary, Inc. is a small 501(c)(3) nonprofit. These are free and will
+stay free. If they end up in your work, please consider
+[a donation to the Sanctuary](https://donate.stripe.com/fZu28qdJ82rkeCD7FxfMA00). It keeps tools like this coming.
